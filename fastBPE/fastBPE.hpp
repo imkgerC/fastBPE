@@ -455,8 +455,10 @@ void readCodes(const char *fp, unordered_map<tps, uint32_t, pair_hash> &codes,
     assert(splits.size() == 3);
     auto pair = make_pair(splits[0], splits[1]);
     string concat = splits[0] + splits[1];
-    assert(codes.find(pair) == codes.end());
-    assert(reversed_codes.find(concat) == reversed_codes.end());
+    if (codes.find(pair) == codes.end() || 
+      reversed_codes.find(concat) == reversed_codes.end()) {
+      continue;
+    }
     codes[pair] = codes.size();
     reversed_codes[concat] = pair;
   }
